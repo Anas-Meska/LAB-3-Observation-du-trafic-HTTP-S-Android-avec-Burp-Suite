@@ -1,0 +1,47 @@
+Ouverture de Burb : image Verification de history :
+
+image
+Nous avons lancé Burp Suite en mode projet temporaire afin de travailler dans un environnement de laboratoire. L’onglet Proxy a été sélectionné, et l’option Intercept a été vérifiée. L’interception a été laissée désactivée (Intercept is off) afin d’éviter le blocage du trafic avant la configuration complète du proxy. L’onglet HTTP History a également été vérifié pour confirmer que les requêtes pourront être capturées.
+
+Vérification du Proxy Listener dans Burp Suite. Un listener actif est configuré sur le port <PORT_PROXY> avec l’adresse d’écoute <TYPE_ADRESSE>. Ces paramètres permettent à l’émulateur d’envoyer son trafic vers Burp.*
+
+image
+Identification de l’adresse réseau de la machine hôte. L’adresse IPv4 utilisée pour le laboratoire est <IP_HOTE>. Cette adresse permettra à l’émulateur d’envoyer son trafic vers le proxy Burp installé sur la machine hôte.
+
+image
+Le proxy a été configuré dans l’Android Emulator en mode Manual avec l’hôte <IP_HOTE> et le port <PORT_PROXY> afin de rediriger le trafic vers Burp Suite.
+
+image image
+Configuration du proxy dans l’Android Emulator Le proxy a été configuré en mode Manual sur le réseau Wi-Fi actif. L’adresse utilisée est 10.0.2.2 et le port est 8080. Cette configuration permet de rediriger le trafic HTTP de l’émulateur vers Burp Suite exécuté sur la machine hôte.
+
+image image
+Analyse d’une requête HTTP capturée. La requête sélectionnée utilise la méthode GET vers la ressource /. Les en-têtes HTTP incluent notamment Host, User-Agent et Accept. L’inspection structurée permet d’identifier les paramètres, cookies éventuels et en-têtes transmis par le client. Cette étape permet de comprendre la nature des données envoyées par l’application et constitue une base d’analyse en sécurité mobile.
+
+image image image
+Principe du certificat CA en environnement HTTPS. Le protocole HTTPS empêche l’interception du trafic par défaut. Dans un laboratoire contrôlé, l’ajout temporaire d’un certificat CA permet au navigateur de faire confiance au proxy d’analyse. Cette opération doit rester limitée à l’émulateur et être supprimée après le test afin de préserver la sécurité de l’environnement.
+
+Risques potentiels (génériques)
+
+Présence éventuelle de tokens ou identifiants en URL (si application réelle).
+
+Cookies non sécurisés (absence de Secure / HttpOnly).
+
+Transmission de données sensibles en HTTP non chiffré.
+
+⚠ Aucun de ces risques n’a été exploité. Il s’agit d’une analyse pédagogique.
+
+Recommandations défensives
+
+Utiliser HTTPS exclusivement.
+
+Ne jamais transmettre de données sensibles en URL.
+
+Sécuriser les cookies côté serveur (Secure, HttpOnly, SameSite).
+
+Minimiser les données envoyées par l’application.
+
+Restreindre l’usage de certificats CA aux environnements de test.
+
+7️ Conclusion
+
+La chaîne proxy fonctionne correctement. Le trafic HTTP de l’émulateur est interceptable et analysable dans un environnement contrôlé. Le test est reproductible avec la même configuration. image
